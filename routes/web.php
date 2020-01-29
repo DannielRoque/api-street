@@ -19,5 +19,7 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('produtos', 'ProdutosController@store');
     $router->get('produtos', 'ProdutosController@index');
-    $router->get('produtos/{id}', 'ProdutosController@get');
+    $router->get('produtos/{id}', 'ProdutosController@show');
+    $router->put('produtos/{id}', 'ProdutosController@update');
+    $router->delete('produtos/{id}', 'ProdutosController@destroy');
 });

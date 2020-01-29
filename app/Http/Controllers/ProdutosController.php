@@ -13,15 +13,40 @@ class ProdutosController
 
     public function store(Request $request)
     {
-        return response()->json(Produto::create(['descricao' => $request->descricao ,'quantidade' => $request->quantidade,'preco' => $request->preco]), 201);
+        return response()->json(Produto::create($request->all()), 201);
     }
 
-    public function get(int $id)
+    public function show(int $id)
     {
         $produto = Produto::find($id);
         if (is_null($produto)){
             return response()->json('', 204);
         }
         return response()->json($produto);
+    }
+
+    public function update(int $id, Request $request)
+    {
+        $produto = Produto::find($id);
+        if(is_null($produto)){
+            return response()->json([
+                'erro'=> 'recurso não encontrado'
+            ], 404);
+        }
+        $produto->fill($request->all());
+        $produto->save();
+
+        return$produto;
+    }
+
+    public function destroy(int $id)
+    {
+     $qtdRecursosRemovidos =   Produto::destroy($id);
+     if ($qtdRecursosRemovidos === 0){
+         return response()->json([
+             'erro' => 'Recurso não encontrado'
+         ], 404);
+     }
+     return response()->json('', 204);
     }
 }
