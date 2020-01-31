@@ -17,9 +17,19 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->post('produtos', 'ProdutosController@store');
-    $router->get('produtos', 'ProdutosController@index');
-    $router->get('produtos/{id}', 'ProdutosController@show');
-    $router->put('produtos/{id}', 'ProdutosController@update');
-    $router->delete('produtos/{id}', 'ProdutosController@destroy');
+    $router->group(['prefix' =>'produtos'], function () use ($router){
+        $router->post('', 'ProdutosController@store');
+        $router->get('', 'ProdutosController@index');
+        $router->get('/{id}', 'ProdutosController@show');
+        $router->put('/{id}', 'ProdutosController@update');
+        $router->delete('/{id}', 'ProdutosController@destroy');
+    });
+
+        $router->group(['prefix' =>'clientes'], function () use ($router){
+            $router->post('', 'ClientesController@store');
+            $router->get('', 'ClientesController@index');
+            $router->get('/{id}', 'ClientesController@show');
+            $router->put('/{id}', 'ClientesController@update');
+            $router->delete('/{id}', 'ClientesController@destroy');
+    });
 });
